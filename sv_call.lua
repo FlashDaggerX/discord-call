@@ -1,3 +1,5 @@
+-- GLua Script
+
 util.AddNetworkString("CallDiscord")
 
 net.Receive("CallDiscord",function(l,ply)
