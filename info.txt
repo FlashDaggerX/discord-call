@@ -1,0 +1,10 @@
+"AddonInfo"
+{
+        "name"              "discord-call"
+        "version"           "1.0"
+        "up_date"           ""
+        "author_name"       "TheCrossBoy"
+        "author_email"      ""
+        "info"              "Allows players to call moderators from discord to the server."
+        "override"          "0"
+}
