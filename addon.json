@@ -1,0 +1,11 @@
+{
+	"title"		:	"discord-call",
+	"type"		:	"ServerContent",
+	"tags"		:	[ "fun" ],
+	"ignore"	:
+	[
+                "*.nanorc",
+                ".git/",
+		".vscode/"
+	]
+}
