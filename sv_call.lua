@@ -1,7 +1,5 @@
 -- GLua Script
 
-util.AddNetworkString("CallDiscord")
-
 net.Receive("CallDiscord",function(l,ply)
 	if (discordcall.enabled) then
 		if ((os.time()-ply:GetPData("LastDiscordCall",0)) > (60 * discordcall.timeout)) then

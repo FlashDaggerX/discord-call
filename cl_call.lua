@@ -10,7 +10,7 @@ include("win/create_window.lua")
 	net.SendToServer()
 end)]]--
 
-concommand.Add("ping_menu",function()
+hook.Add("OnPlayerChat", "!calldiscord",function()
 
 	win:CreateDFrame		(nil, "Help!", {}, {x=400, y=175})
 	win:CreateDLabel		(win:GetActiveWindow(), "Reason", {x=20, y=50}, {})
