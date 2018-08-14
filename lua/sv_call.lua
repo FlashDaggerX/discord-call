@@ -1,6 +1,6 @@
 -- GLua Script
 
-include("config.lua")
+include("sv_config.lua")
 
 -- (os.time()-ply:GetPData("LastDiscordCall",0)) > (60 * discordcall.timeout)
 
