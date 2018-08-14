@@ -9,3 +9,4 @@ if (SERVER) then
 else
     AddCSLuaFile("../../cl_call.lua")
 end
+print("discord-calls Initialized!")
