@@ -1,4 +1,5 @@
 -- GLua Script
+-- Created by Kyle Guarco <kyleguarco55@gmail.com>
 
 win = {}
 
