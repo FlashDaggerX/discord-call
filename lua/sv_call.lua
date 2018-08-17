@@ -12,18 +12,21 @@ include("autorun/config.lua")
 
 net.Receive("CallDiscord",function(l,ply)
 	local pid = ply:SteamID64()
-	if pid == nil then pid = "<SingleplayerSTEAM64>" end
+	if pid == nil then pid = "0000000000000000" end
 
 	local post = 
 	{
-		content = "A message from STEAMID:"..pid,
-		embeds = 
-		{
-			{
-				title = GetHostName(),
-				url = "steam://connect/"..game.GetIPAddress()
+		-- https://scriptinghelpers.org/questions/45061/how-do-i-fix-this-discord-webhook-script-so-that-embeds-work
+		username = "username",
+		embeds = {{
+			fields = {
+				{value = "1",name = "2"},
+				{value = "3",name = "4"}},
+			title = "5",
+			description = "6"
 			}
-		}
+		},
+		content = "0"
 	}
 	
 	http.Post(
