@@ -1,6 +1,6 @@
 -- GLua Script
 
-include("create_window.lua")
+include("lib_window.lua")
 
 --[[concommand.Add("ping_staff",function(ply,cmd,args,argStr)		
 	local reason = string.TrimLeft(argStr)

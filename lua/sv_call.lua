@@ -1,7 +1,7 @@
 -- GLua Script
 
 include("autorun/config.lua")
-include("webhook.lua")
+include("lib_webhook.lua")
 
 -- (os.time()-ply:GetPData("LastDiscordCall",0)) > (60 * discordcall.timeout)
 --[[ args["durl"] = discordcall.webhook
@@ -12,16 +12,16 @@ include("webhook.lua")
 	]]
 
 net.Receive("CallDiscord",function(l,ply)
+	local name = ply:GetName()
 	local pid = ply:SteamID64()
-	if pid == nil then pid = "0000000000000000" end
+	if pid == nil then pid = "0000000000000000" name = "local" end
 
-	webhook:CreateUsername(ply:GetName().." : "..pid)
-	webhook:CreateContent("Reason: ".."\""..net.ReadString().."\"")
+	webhook:CreateUsername(name.." "..pid)
+	webhook:CreateContent("Reason: "..net.ReadString())
 	webhook:CreateEmbeds(
-		{ 
+		{
 			title = "ALERT!", 
-			url ="steam://connect/"..game.GetIPAddress(), 
-			description = "A message from Garry's Mod." 
+			description = "steam://connect/"..game.GetIPAddress()
 		})
 
 	webhook:CreateWebhookJSON(true)
@@ -43,8 +43,6 @@ net.Receive("CallDiscord",function(l,ply)
 	}
 	
 	HTTP( t_struct )
-
-	webhook:Clear()
 
 	--[[if discordcall.enabled then
 		if (os.time() - ply:GetPData("LastDiscordCall", 0)) > (60 * discordcall.timeout) then
