@@ -1,6 +1,7 @@
 -- GLua Script
 
 include("autorun/config.lua")
+include("webhook.lua")
 
 -- (os.time()-ply:GetPData("LastDiscordCall",0)) > (60 * discordcall.timeout)
 --[[ args["durl"] = discordcall.webhook
@@ -14,35 +15,36 @@ net.Receive("CallDiscord",function(l,ply)
 	local pid = ply:SteamID64()
 	if pid == nil then pid = "0000000000000000" end
 
-	local post = 
-	{
-		-- https://scriptinghelpers.org/questions/45061/how-do-i-fix-this-discord-webhook-script-so-that-embeds-work
-		username = "username",
-		embeds = {{
-			fields = {
-				{value = "1",name = "2"},
-				{value = "3",name = "4"}},
-			title = "5",
-			description = "6"
-			}
-		},
-		content = "0"
-	}
-	
-	http.Post(
-		discordcall.webhook, post, 
+	webhook:CreateUsername(ply:GetName().." : "..pid)
+	webhook:CreateContent("Reason: ".."\""..net.ReadString().."\"")
+	webhook:CreateEmbeds(
+		{ 
+			title = "ALERT!", 
+			url ="steam://connect/"..game.GetIPAddress(), 
+			description = "A message from Garry's Mod." 
+		})
 
-		function(resp, length, headers, status)
-			print(resp)
+	webhook:CreateWebhookJSON(true)
 
-			ply:SetPData("LastDiscordCall", os.time())
-			ply:ChatPrint("Sent message successfully! Please wait patiently for a response.")
+	local t_struct = {
+		failed = function(err) 
+			MsgC( Color(255,0,0), "HTTP error: " .. err ) 
+		end,
+		
+		success = function(code, body, headers)
+			print("EXPECTED_SUCCESS\n"..webhook:GetHeldJSON().."\n")
+			print("START_SUCCESS\n"..code.."\n"..body.."\n"..util.TableToKeyValues(headers))
 		end,
 
-		function(err)
-			print(err)
-		end
-	)
+        method = "post",
+        url = discordcall.webhook,
+        body = webhook:GetHeldJSON(),
+		type = "application/json; charset=utf-8" --JSON Request type, because I'm a good boy.
+	}
+	
+	HTTP( t_struct )
+
+	webhook:Clear()
 
 	--[[if discordcall.enabled then
 		if (os.time() - ply:GetPData("LastDiscordCall", 0)) > (60 * discordcall.timeout) then
